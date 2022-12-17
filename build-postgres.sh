@@ -1,7 +1,7 @@
 #!/bin/bash
 # ----------------------------------------------
 # DEVOPS --
-# Script to deploy a postgres container through
+# Script to deploy a postgres container with
 # docker-compose
 # ----------------------------------------------
 # Required from .env
