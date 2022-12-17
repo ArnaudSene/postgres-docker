@@ -1,6 +1,6 @@
 # Install Postgres SQL object-relational database system on Docker
 
-[Postgres Docker](https://github.com/docker-library/docs/blob/master/postgres/README.md)
+[Postgres Docker source](https://github.com/docker-library/docs/blob/master/postgres/README.md)
 
 ## Prepare your environment
 
@@ -22,7 +22,7 @@ PGADMIN_DEFAULT_PASSWORD="pgadmin password"
 ```
 
 ## Install & start Postgres container
-The script will configure environment, create the containers and start Postgres with pgadmin.
+The script will configure the environment, create and start containers.
 
 ```shell
 bash start-postgres.sh
@@ -38,9 +38,10 @@ docker inspect postgres-docker-pgadmin-1|grep IPAddress|cut -d":" -f2|tail -1
 
 ### Open the pgadmin web GUI
 Through a web browser enter the url to pgadmin with the IP address retrieve before.
-e.g: if IP address is 10.0.0.1
 
-http://10.0.0.1:5433/
+> e.g: with IP address = 10.0.0.1
+> 
+> http://10.0.0.1:5433/
 
 Use the credentials defined in the .env
 
@@ -50,17 +51,16 @@ Use the credentials defined in the .env
 
 
 ### Add New Server
-
-Provide
-
-- server name: e.g: server_poc
+#### General
+> server name: e.g: server_poc
 
 ![](img/pgadmin-tab-general-server-name.png)
 
-Provide 
-
-- hostname: postgres-docker-database-1
-- username: postgres
-- password: file .env POSTGRES_PASSWORD
+#### Connection
+> hostname: postgres-docker-database-1
+>  
+> username: postgres
+>  
+> password: in file `.env` *POSTGRES_PASSWORD*
 
 ![](img/pgadmin-tab-connection.png)
