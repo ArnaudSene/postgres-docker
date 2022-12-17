@@ -4,13 +4,13 @@
 
 ## Prepare your environment
 
-## Docker
+### Docker
 `Docker` and `docker compose` must be installed on the server in order to install and start Postgres system. 
 
 - docker installed [Install Docker Engine](https://docs.docker.com/engine/install/)
 - docker-compose installed [Install Docker Compose](https://docs.docker.com/compose/install/)
 
-## Postgres configuration 
+### Postgres configuration 
 Edit the `.env` file with required values.
 
 ```dotenv
@@ -21,7 +21,7 @@ PGADMIN_DEFAULT_EMAIL="a valid email"
 PGADMIN_DEFAULT_PASSWORD="pgadmin password"
 ```
 
-## Start postgres container
+## Install & start Postgres container
 The script will configure environment, create the containers and start Postgres with pgadmin.
 
 ```shell
