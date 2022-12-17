@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  database:
+    image: "postgres:latest"
+    restart: always
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    environment:
+      PGDATA: /var/lib/pg_data
+    networks:
+      - postgres-network
+    volumes:
+      - /home/postgres/db-data/:/var/lib/pg_data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - "5433:80"
+    env_file:
+      - .env
+    environment:
+      SESSION_DB_PATH: /var/lib/pg_admin
+    depends_on:
+      - database
+    networks:
+      - postgres-network
+    volumes:
+      - /home/postgres/pgadmin-data/:/var/lib/pg_admin
+
+networks:
+  postgres-network:
+    driver: bridge
