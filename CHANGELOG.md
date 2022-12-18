@@ -1,3 +1,12 @@
+0.4.0
+
+feat: Update location for certificates
+
+- update certs location to /home/postgres/certs
+- update volumes for pgadmin4
+- update README
+
+---
 0.3.1
 
 fix: Update .env 
