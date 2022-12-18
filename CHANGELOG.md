@@ -1,3 +1,11 @@
+0.4.1
+
+fix: Check .env file exist
+
+- .env must exist
+- update README
+
+---
 0.4.0
 
 feat: Update location for certificates
