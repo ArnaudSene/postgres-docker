@@ -1,3 +1,11 @@
+0.3.1
+
+fix: Update .env 
+
+- update default value in .env file
+- update README
+
+---
 0.3.0
 
 feat: Add tls for PG admin panel
