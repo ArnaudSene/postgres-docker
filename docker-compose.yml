@@ -3,6 +3,7 @@ version: "3"
 services:
   database:
     image: "postgres:latest"
+    container_name: postgres_container
     restart: always
     ports:
       - "5432:5432"
@@ -17,8 +18,10 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
     ports:
-      - "5433:80"
+      - "5433:443"
     env_file:
       - .env
     environment:
@@ -29,6 +32,8 @@ services:
       - postgres-network
     volumes:
       - /home/postgres/pgadmin-data/:/var/lib/pg_admin
+      - /tmp/certs/pgadmin_server.crt:/certs/server.cert
+      - /tmp/certs/pgadmin_server.key:/certs/server.key
 
 networks:
   postgres-network:
