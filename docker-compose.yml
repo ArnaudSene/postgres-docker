@@ -32,8 +32,8 @@ services:
       - postgres-network
     volumes:
       - /home/postgres/pgadmin-data/:/var/lib/pg_admin
-      - /tmp/certs/pgadmin_server.crt:/certs/server.cert
-      - /tmp/certs/pgadmin_server.key:/certs/server.key
+      - /home/postgres/certs/pgadmin_server.crt:/certs/server.cert
+      - /home/postgres/certs/pgadmin_server.key:/certs/server.key
 
 networks:
   postgres-network:

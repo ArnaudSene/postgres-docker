@@ -19,6 +19,7 @@ cd postgres-docker
 Edit the `.env` file with required values.
 
 ```shell
+cp env-custom .env
 vi .env
 ```
 
@@ -26,8 +27,11 @@ vi .env
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD="pg password"
 POSTGRES_DB="database name"
+
 PGADMIN_DEFAULT_EMAIL="a valid email"
 PGADMIN_DEFAULT_PASSWORD="pgadmin password"
+PGADMIN_ENABLE_TLS: 1
+PGADMIN_LISTEN_PORT: 443
 ```
 
 Create certificate
@@ -38,7 +42,7 @@ cd certs
 openssl req -new -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out pgadmin_server.crt -keyout pgadmin_server.key
 ```
 
-Create and start containers.
+Create and start containers
 
 ```shell
 bash start-postgres.sh

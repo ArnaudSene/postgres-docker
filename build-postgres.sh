@@ -18,7 +18,6 @@ PGADMIN_PERM=5050
 
 # Certificates
 CERT_DIR="certs"
-CERT_TMP_DIR="/tmp/certs"
 CERT_CRT_FILE="pgadmin_server.crt"
 CERT_KEY_FILE="pgadmin_server.key"
 
@@ -51,7 +50,6 @@ fi
 
 PG_HOME=$(grep postgres /etc/passwd|cut -d":" -f6)
 ## Check directory for POSTGRES_DIR
-echo "Check directory ${PG_HOME}/${POSTGRES_DIR}"
 if [ ! -d "${PG_HOME}/${POSTGRES_DIR}" ]
 then
     echo "Create directory ${PG_HOME}/${POSTGRES_DIR}"
@@ -59,8 +57,7 @@ then
     sudo -u "${POSTGRES_USER}" mkdir "${PG_HOME}/${POSTGRES_DIR}"
 fi
 
-# Check directory on pgadmin
-echo "Check directory ${PG_HOME}/${PGADMIN_DIR}"
+# Check directory for pgadmin
 if [ ! -d "${PG_HOME}/${PGADMIN_DIR}" ]
 then
     echo "Create directory ${PG_HOME}/${PGADMIN_DIR}"
@@ -68,8 +65,16 @@ then
     sudo -u "${POSTGRES_USER}" mkdir "${PG_HOME}/${PGADMIN_DIR}"
 fi
 
+# Check directory for certs
+if [ ! -d "${PG_HOME}/${CERT_DIR}" ]
+then
+    echo "Create directory ${PG_HOME}/${CERT_DIR}"
+    echo "sudo -u ${POSTGRES_USER} mkdir ${PG_HOME}/${CERT_DIR}"
+    sudo -u "${POSTGRES_USER}" mkdir "${PG_HOME}/${CERT_DIR}"
+fi
+
+
 # Check certificates, and copy to tmp dir
-echo "Check certificates ${CERT_DIR}"
 CERT_CRT=$(ls ${CERT_DIR}/${CERT_CRT_FILE})
 CERT_KEY=$(ls ${CERT_DIR}/${CERT_KEY_FILE})
 
@@ -80,17 +85,17 @@ then
 fi
 
 
-if [ ! -d "${CERT_TMP_DIR}" ]
+if [ ! -f "${PG_HOME}/${CERT_DIR}/${CERT_CRT_FILE}" ] || [ ! -f "${PG_HOME}/${CERT_DIR}/${CERT_KEY_FILE}" ]
 then
-  mkdir ${CERT_TMP_DIR}
-fi
+  echo "sudo cp ${CERT_DIR}/pgadmin_server.* ${PG_HOME}/${CERT_DIR}/"
+        sudo cp ${CERT_DIR}/pgadmin_server.* "${PG_HOME}/${CERT_DIR}/"
 
-if [ ! -f "${CERT_TMP_DIR}/${CERT_CRT_FILE}" ] || [ ! -f "${CERT_TMP_DIR}/${CERT_KEY_FILE}" ]
-then
-  cp ${CERT_DIR}/* ${CERT_TMP_DIR}
-  sudo chmod 400 ${CERT_TMP_DIR}/*.key
-  sudo chown -R "${POSTGRES_USER}":"${POSTGRES_USER}" ${CERT_TMP_DIR}
+  echo "sudo chown -R ${POSTGRES_USER}:${POSTGRES_USER} ${PG_HOME}/${CERT_DIR}"
+        sudo chown -R "${POSTGRES_USER}":"${POSTGRES_USER}" "${PG_HOME}/${CERT_DIR}"
+
+  echo "sudo chmod 400 ${PG_HOME}/${CERT_DIR}/${CERT_KEY_FILE}"
+        sudo chmod 400 "${PG_HOME}/${CERT_DIR}/${CERT_KEY_FILE}"
 fi
 
 # Start Container
-/usr/bin/docker compose up
+/usr/bin/docker compose up -d
