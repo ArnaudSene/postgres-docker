@@ -5,10 +5,17 @@
 # docker-compose
 # ----------------------------------------------
 # Required from .env
-DATABASE_PASSWORD=$(grep POSTGRES_PASSWORD .env|cut -d"=" -f2)
-PGADMIN_DEFAULT_PASSWORD=$(grep PGADMIN_DEFAULT_PASSWORD .env|cut -d"=" -f2)
-PGADMIN_DEFAULT_EMAIL=$(grep PGADMIN_DEFAULT_EMAIL .env|cut -d"=" -f2)
-POSTGRES_USER=$(grep POSTGRES_USER .env|cut -d"=" -f2)
+ENV_FILE=".env"
+if [ ! -f ${ENV_FILE} ]
+then
+    echo "${ENV_FILE} is missing."
+    exit 1
+fi
+
+DATABASE_PASSWORD=$(grep POSTGRES_PASSWORD ${ENV_FILE}|cut -d"=" -f2)
+PGADMIN_DEFAULT_PASSWORD=$(grep PGADMIN_DEFAULT_PASSWORD ${ENV_FILE}|cut -d"=" -f2)
+PGADMIN_DEFAULT_EMAIL=$(grep PGADMIN_DEFAULT_EMAIL ${ENV_FILE}|cut -d"=" -f2)
+POSTGRES_USER=$(grep POSTGRES_USER ${ENV_FILE}|cut -d"=" -f2)
 POSTGRES_USER_EXIST=$(grep "${POSTGRES_USER}" /etc/passwd)
 
 # Required directory and UID:GUID
