@@ -33,6 +33,7 @@ PGADMIN_DEFAULT_PASSWORD="pgadmin password"
 Create certificate
 
 ```shell
+mkdir certs
 cd certs
 openssl req -new -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out pgadmin_server.crt -keyout pgadmin_server.key
 ```
