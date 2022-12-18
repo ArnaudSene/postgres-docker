@@ -1,3 +1,11 @@
+0.3.0
+
+feat: Add tls for PG admin panel
+
+- pgadmin use tls
+- update README
+
+---
 0.2.0
 
 patch: Update README
